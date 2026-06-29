@@ -25,3 +25,7 @@ Usage ccwc [options] [file...]
     -c, --characters    Count characters
     -b, --bytes         Count bytes
 ```
+
+## What's more to add?
+
+Support for multiple file usage.
