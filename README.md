@@ -16,6 +16,7 @@ How to build:
 After that, the binary should appear in the build/Release/ directory.
 From this location, it can be moved to /usr/bin/ and after that, it can be used as follows:
 
+```
 Usage ccwc [options] [file...]
     Options:
     -h, --help          Show help message
@@ -23,3 +24,4 @@ Usage ccwc [options] [file...]
     -l, --lines         Count lines
     -c, --characters    Count characters
     -b, --bytes         Count bytes
+```
