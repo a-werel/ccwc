@@ -33,8 +33,7 @@ CLITextCounter::CLITextCounter(int argc, char* argv[]) : argc_(argc), options_()
             if (std::strncmp("-", argv[i], 1) == 0) {
                 options_.push_back(std::string(argv[i]));
             } else {
-                std::string filename(argv[i]);
-                text_ += readFromFile(filename);
+                filenames_.push_back(std::string(argv[i]));
             }
         }
     }
@@ -45,23 +44,46 @@ void CLITextCounter::execute() {
         printHelp();
         return;
     }
-    for (const auto& option : options_) {
-        if (option == "-h" || option == "--help") {
-            printHelp();
-            return;
-        } else if (option == "-w" || option == "--words") {
-            std::cout << "Word count: " << countWords(text_) << std::endl;
-        } else if (option == "-l" || option == "--lines") {
-            std::cout << "Line count: " << countLines(text_) << std::endl;
-        } else if (option == "-c" || option == "--characters") {
-            std::cout << "Character count: " << countCharacters(text_) << std::endl;
-        } else if (option == "-b" || option == "--bytes") {
-            std::cout << "Byte count: " << countBytes(text_) << std::endl;
-        } else {
-            std::cerr << "Unknown option: " << option << std::endl;
-            printHelp();
-            return;
+    for (const auto& filename : filenames_) {
+        text_ = readFromFile(filename);
+        for (const auto& option : options_) {
+            if (option == "-h" || option == "--help") {
+                printHelp();
+                return;
+            } else if (option == "-w" || option == "--words") {
+                auto words = countWords(text_);
+                std::cout << "Word count in file " << filename << ": " << words << std::endl;
+                totalWords_ += words;
+            } else if (option == "-l" || option == "--lines") {
+                auto lines = countLines(text_);
+                std::cout << "Line count in file " << filename << ": " << lines << std::endl;
+                totalLines_ += lines;
+            } else if (option == "-c" || option == "--characters") {
+                auto characters = countCharacters(text_);
+                std::cout << "Character count in file " << filename << ": " << characters << std::endl;
+                totalCharacters_ += characters;
+            } else if (option == "-b" || option == "--bytes") {
+                auto bytes = countBytes(text_);
+                std::cout << "Byte count in file " << filename << ": " << bytes << std::endl;
+                totalBytes_ += bytes;
+            } else {
+                std::cerr << "Unknown option: " << option << std::endl;
+                printHelp();
+                return;
+            }
         }
+    }
+    if (totalWords_ > 0) {
+        std::cout << "Total word count: " << totalWords_ << std::endl;
+    }
+    if (totalLines_ > 0) {
+        std::cout << "Total line count: " << totalLines_ << std::endl;
+    }
+    if (totalCharacters_ > 0) {
+        std::cout << "Total character count: " << totalCharacters_ << std::endl;
+    }
+    if (totalBytes_ > 0) {
+        std::cout << "Total byte count: " << totalBytes_ << std::endl;
     }
 }
 
