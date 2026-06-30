@@ -25,12 +25,12 @@ TEST(CLITextCounterTest, CountWords) {
 
 TEST(CLITextCounterTest, CountLines) {
     CLITextCounterWrapper counter(0, nullptr);
-    EXPECT_EQ(counter.countLinesPublic("Hello world!"), 1);
-    EXPECT_EQ(counter.countLinesPublic("Hello world!\nThis is a test."), 2);
-    EXPECT_EQ(counter.countLinesPublic("Line1\nLine2\nLine3"), 3);
+    EXPECT_EQ(counter.countLinesPublic("Hello world!"), 0);
+    EXPECT_EQ(counter.countLinesPublic("Hello world!\nThis is a test."), 1);
+    EXPECT_EQ(counter.countLinesPublic("Line1\nLine2\nLine3"), 2);
     EXPECT_EQ(counter.countLinesPublic(""), 0);
-    EXPECT_EQ(counter.countLinesPublic("\n\n\n"), 4);
-    EXPECT_EQ(counter.countLinesPublic("\t\t\t"), 1);
+    EXPECT_EQ(counter.countLinesPublic("\n\n\n"), 3);
+    EXPECT_EQ(counter.countLinesPublic("\t\t\t"), 0);
 }
 
 TEST(CLITextCounterTest, CountCharacters) {

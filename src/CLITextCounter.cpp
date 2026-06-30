@@ -34,7 +34,7 @@ CLITextCounter::CLITextCounter(int argc, char* argv[]) : argc_(argc), options_()
                 options_.push_back(std::string(argv[i]));
             } else {
                 std::string filename(argv[i]);
-                text_ = readFromFile(filename);
+                text_ += readFromFile(filename);
             }
         }
     }
@@ -78,7 +78,7 @@ int CLITextCounter::countWords(const std::string& text) const {
     return std::distance(begin, end);
 }
 
-int CLITextCounter::countLines(const std::string& text) const { return std::count(text.begin(), text.end(), '\n') + (text.empty() ? 0 : 1); }
+int CLITextCounter::countLines(const std::string& text) const { return std::count(text.begin(), text.end(), '\n'); }
 
 int CLITextCounter::countBytes(const std::string& text) const { return static_cast<int>(text.size()); }
 
